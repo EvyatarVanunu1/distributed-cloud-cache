@@ -9,8 +9,15 @@ do
 done
 
 
+
 KEY_NAME="cloud-course-`date +"%s"`"
 KEY_PEM="$KEY_NAME.pem"
+
+BUCKET_NAME="s3://distributed_cache_bucket"
+
+echo "creating S3 bucket ${}"
+aws s3 mb ${BUCKET_NAME} --profile idc
+
 
 echo "create key pair $KEY_PEM to connect to instances and save locally"
 aws ec2 create-key-pair --key-name $KEY_NAME \
