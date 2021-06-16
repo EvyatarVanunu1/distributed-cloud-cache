@@ -1,17 +1,21 @@
+import datetime
 import itertools
+import time
 
 from flask_restful import Resource
-from flask import request
+from flask import request, current_app
+
+from node.models.CacheItem import CacheItem
 from orchestrator.nodes import NodeClient
-from ring import Ring
+from ring import Ring, Nodes
 
 
 class Cache(Resource):
 
     def get(self, key):
 
-        client = NodeClient()
-        alive_nodes = client.get_alive_nodes()
+        client = NodeClient(bucket_name=current_app.config["S3_BUCKET"], aws_region=current_app.config["AWS_REGION"])
+        alive_nodes = Nodes.get_alive_nodes()
 
         ring_nodes = Ring.get_nodes(key=key, nodes=alive_nodes)
         mapped_nodes = Ring.get_nodes_from_map(key=key)
@@ -30,9 +34,33 @@ class Cache(Resource):
         if not body.get("data") or not body.get("expiration_date"):
             return {"msg": "invalid request body. missing data or expiration_date attributes"}, 400
 
-        client = NodeClient()
-        alive_nodes = client.get_alive_nodes()
+        try:
+            expiration_date=datetime.datetime.timestamp(datetime.datetime.fromisoformat(body['expiration_date']))
+        except ValueError:
+            return 400, {"msg": "invalid expiration_date, should be iso-formatted"}
+
+        cache_item = CacheItem(
+            key=key,
+            data=body["data"],
+            expiration_date=expiration_date,
+            time=time.time()
+        ).serialize()
+
+        client = NodeClient(bucket_name=current_app.config["S3_BUCKET"], aws_region=current_app.config["AWS_REGION"])
+        alive_nodes = Nodes.get_alive_nodes()
         ring_nodes = Ring.get_nodes(key=key, nodes=alive_nodes)
+
+        resps = client.put_in_nodes(
+            key=key,
+            val=cache_item,
+            nodes=ring_nodes
+        )
+
+        if resps:
+            Ring.set_to_map(key, nodes=ring_nodes)
+            return {}, 200
+        else:
+            return {"msg": "failed to put data in cache"}, 500
 
 
 
