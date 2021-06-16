@@ -10,6 +10,7 @@ do
     esac
 done
 
+echo ${SEC_GRP}
 
 KEY_PEM="$KEY_NAME.pem"
 
@@ -36,7 +37,7 @@ URL = "http://${PUBLIC_IP}:80"
 echo "New instance $INSTANCE_ID @ $PUBLIC_IP"
 
 echo "deploying config file to production"
-/bin/bash create_env_file.sh -s URL -b BUCKET_NAME
+/bin/bash create_env_file.sh -s ${URL} -b ${BUCKET_NAME}
 scp -i $KEY_PEM -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=60" env_file ubuntu@$PUBLIC_IP:/home/ubuntu/
 rm env_file
 
