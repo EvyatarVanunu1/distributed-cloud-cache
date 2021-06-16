@@ -9,6 +9,12 @@ from orchestrator.nodes import NodeClient
 from ring import Ring, Nodes
 
 
+class Heartbeat(Resource):
+
+    def get(self):
+        return "I'm Alive!", 200
+
+
 class Cache(Resource):
 
     def get(self, key):
