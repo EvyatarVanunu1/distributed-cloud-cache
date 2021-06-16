@@ -10,9 +10,9 @@ done
 KEY_NAME="cloud-course-cache"
 KEY_PEM="$KEY_NAME.pem"
 
-BUCKET_NAME="s3://distributed-cache-bucket"
-
-echo "creating S3 bucket ${BUCKET_NAME}"
+BUCKET_NAME="distributed-cache-bucket"
+BUCKET_URL="s3://${BUCKET_NAME}"
+echo "creating S3 bucket ${BUCKET_URL}"
 aws s3 mb ${BUCKET_NAME}
 
 echo "create key pair $KEY_PEM to connect to instances and save locally"
@@ -87,6 +87,6 @@ EOF
 echo "test that it all worked"
 curl --retry-connrefused --retry 10 --retry-delay 1 http://$PUBLIC_IP:80/health
 
-for ((c = 1; c < NUM_NODES; c++)); do
+for ((c = 0; c < NUM_NODES; c++)); do
   /bin/bash createNode.sh -s ${SEC_GRP} -b ${BUCKET_NAME} -k ${KEY_NAME}
 done
