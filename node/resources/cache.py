@@ -4,13 +4,7 @@ from flask_restful import Resource
 from flask import request, current_app
 
 
-
-class CacheResource(Resource):
-    def get(self, key):
-        data = cache.get(key)
-        if data:
-            return {"data": data}, 200, ({"Content-Type": "application/json"})
-        return {}, 200, ({"Content-Type": "application/json"})
+class CacheData(Resource):
 
     def get(self):
         res = {"cache": []}
@@ -18,6 +12,13 @@ class CacheResource(Resource):
             res[cache].append(value.serialize)
         return res, 200, ({"Content-Type": "application/json"})
 
+
+class CacheResource(Resource):
+    def get(self, key):
+        data = cache.get(key)
+        if data:
+            return {"data": data}, 200, ({"Content-Type": "application/json"})
+        return {}, 200, ({"Content-Type": "application/json"})
 
     def put(self, key):
         body = request.get_json() or dict()
