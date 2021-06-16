@@ -15,6 +15,7 @@ def update_alive_nodes(bucket_name, region):
     while True:
         alive_nodes = client.get_alive_nodes()
         Nodes.set_alive_nodes(alive_nodes)
+        print(f"alive nodes {alive_nodes}")
         time.sleep(5)
 
 

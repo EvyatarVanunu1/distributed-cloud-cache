@@ -18,6 +18,7 @@ def upload_file(bucket, id):
 
         s3_client = boto3.client('s3')
         s3_client.upload_file(f'{id}.json', bucket,  f'{id}.json')
+        print(f'{id}.json')
         time.sleep(5)
 
 
