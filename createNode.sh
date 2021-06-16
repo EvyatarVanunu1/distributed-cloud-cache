@@ -32,7 +32,7 @@ PUBLIC_IP=$(aws ec2 describe-instances  --instance-ids $INSTANCE_ID |
     jq -r '.Reservations[0].Instances[0].PublicIpAddress'
 )
 
-URL = "http://${PUBLIC_IP}:80"
+URL="http://${PUBLIC_IP}:80"
 
 echo "New instance $INSTANCE_ID @ $PUBLIC_IP"
 

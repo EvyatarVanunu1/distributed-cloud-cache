@@ -62,14 +62,15 @@ PUBLIC_IP=$(
     jq -r '.Reservations[0].Instances[0].PublicIpAddress'
 )
 
-URL = "http://${PUBLIC_IP}:80"
+URL="http://${PUBLIC_IP}:80"
 
 echo "New instance $INSTANCE_ID @ $PUBLIC_IP"
 
 echo "deploying config file to production"
+
 /bin/bash create_env_file.sh -s ${URL} -b ${BUCKET_NAME}
 scp -i $KEY_PEM -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=60" env_file ubuntu@$PUBLIC_IP:/home/ubuntu/
-rm env_file
+EXIT
 
 echo "setup production environment"
 ssh -i $KEY_PEM -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=10" ubuntu@$PUBLIC_IP <<EOF
