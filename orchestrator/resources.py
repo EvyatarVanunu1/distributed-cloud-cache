@@ -5,8 +5,8 @@ from flask_restful import Resource
 from flask import request, current_app
 
 from node.models.CacheItem import CacheItem
-from orchestrator.nodes import NodeClient
-from ring import Ring, Nodes
+from .nodes import NodeClient
+from .ring import Ring, Nodes
 
 
 class Heartbeat(Resource):
@@ -19,7 +19,7 @@ class Cache(Resource):
 
     def get(self, key):
 
-        client = NodeClient(bucket_name=current_app.config["S3_BUCKET"], aws_region=current_app.config["AWS_REGION"])
+        client = NodeClient(bucket_name=current_app.config["S3_BUCKET_NAME"], aws_region=current_app.config["AWS_REGION"])
         alive_nodes = Nodes.get_alive_nodes()
 
         ring_nodes = Ring.get_nodes(key=key, nodes=alive_nodes)
@@ -51,7 +51,7 @@ class Cache(Resource):
             time=time.time()
         ).serialize()
 
-        client = NodeClient(bucket_name=current_app.config["S3_BUCKET"], aws_region=current_app.config["AWS_REGION"])
+        client = NodeClient(bucket_name=current_app.config["S3_BUCKET_NAME"], aws_region=current_app.config["AWS_REGION"])
         alive_nodes = Nodes.get_alive_nodes()
         ring_nodes = Ring.get_nodes(key=key, nodes=alive_nodes)
 

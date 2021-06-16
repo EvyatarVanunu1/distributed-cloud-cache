@@ -29,7 +29,7 @@ def create_app():
     api.init_app(app)
 
     id = str(uuid.uuid4())
-    BUCKET = os.getenv("SERVER_URL")
+    BUCKET = os.getenv("S3_BUCKET_NAME")
 
     t = threading.Thread(target=upload_file, args=(BUCKET, id), daemon=True)
     t.start()

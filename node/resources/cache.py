@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from node.models.Cache import cache
+from ..models.Cache import cache
 
 
 class CacheResource(Resource):

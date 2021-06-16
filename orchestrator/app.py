@@ -21,7 +21,7 @@ def update_alive_nodes(bucket_name, region):
 def create_app():
 
     app = flask.Flask(__name__)
-    app.config["S3_BUCKET"] = os.getenv("S3_BUCKET")
+    app.config["S3_BUCKET_NAME"] = os.getenv("S3_BUCKET_NAME")
     app.config["AWS_REGION"] = os.getenv("AWS_REGION")
 
     api = Api()
@@ -29,7 +29,7 @@ def create_app():
     api.add_resource(Heartbeat, "/health")
     api.init_app(app)
 
-    threading.Thread(target=update_alive_nodes, args=(app.config["S3_BUCKET"], app.config["AWS_REGION"]), daemon=True).start()
+    threading.Thread(target=update_alive_nodes, args=(app.config["S3_BUCKET_NAME"], app.config["AWS_REGION"]), daemon=True).start()
 
     return app
 
