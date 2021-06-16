@@ -12,7 +12,7 @@ class Cache:
         self.map[key] = item
 
     def get(self, key):
-        item = self.map[key]
+        item = self.map.get(key)
         if item:
             if item.expiration_date > time.time():
                 self.map.pop(key)

@@ -8,8 +8,8 @@ class CacheData(Resource):
 
     def get(self):
         res = {"cache": []}
-        for key, value in cache.items():
-            res[cache].append(value.serialize)
+        for key, value in cache.map.items():
+            res["cache"].append(value.serialize)
         return res, 200, ({"Content-Type": "application/json"})
 
 
