@@ -1,5 +1,4 @@
 import datetime
-import itertools
 import time
 
 from flask_restful import Resource
@@ -21,7 +20,7 @@ class Cache(Resource):
         mapped_nodes = Ring.get_nodes_from_map(key=key)
 
         if mapped_nodes and ring_nodes != mapped_nodes:
-            nodes = itertools.chain(mapped_nodes, alive_nodes)
+            nodes = mapped_nodes
         else:
             nodes = ring_nodes
 
@@ -61,12 +60,5 @@ class Cache(Resource):
             return {}, 200
         else:
             return {"msg": "failed to put data in cache"}, 500
-
-
-
-
-
-
-
 
 

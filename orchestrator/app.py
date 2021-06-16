@@ -11,7 +11,7 @@ from orchestrator.ring import Nodes
 
 
 def update_alive_nodes(bucket_name, region):
-    client = NodeClient(bucket_name=bucket_name, region=region)
+    client = NodeClient(bucket_name=bucket_name, aws_region=region)
     while True:
         alive_nodes = client.get_alive_nodes()
         Nodes.set_alive_nodes(alive_nodes)
