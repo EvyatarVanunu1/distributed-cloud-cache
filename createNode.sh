@@ -48,7 +48,7 @@ ssh -i $KEY_PEM -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no" -o "Connec
     sudo apt install docker.io -y
     sudo git clone https://github.com/EvyatarVanunu1/distributed-cloud-cache.git
     cd distributed-cloud-cache
-    sudo docker build . -t distributed-cloud-cache-node -f node.dockerfile
+    sudo docker build . -t distributed-cloud-cache-node -f node.dockerfile -q
     sudo docker run --env-file ~/env_file -p 80:80 -d distributed-cloud-cache-node
     exit
 EOF

@@ -5,3 +5,4 @@ __pycache__/*
 aws_env_file
 *.pem
 env_file
+test.sh
