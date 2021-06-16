@@ -6,7 +6,7 @@ import flask
 from flask_restful import Api
 
 from orchestrator.nodes import NodeClient
-from orchestrator.resources import Cache
+from orchestrator.resources import Cache, Heartbeat
 from orchestrator.ring import Nodes
 
 
@@ -26,6 +26,7 @@ def create_app():
 
     api = Api()
     api.add_resource(Cache, "/cache")
+    api.add_resource(Heartbeat, "/health")
     api.init_app(app)
 
     threading.Thread(target=update_alive_nodes, args=(app.config["S3_BUCKET"], app.config["AWS_REGION"]), daemon=True).start()
