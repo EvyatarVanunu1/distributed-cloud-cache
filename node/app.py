@@ -17,7 +17,7 @@ def upload_file(bucket, id):
             json.dump(sample, fp)
 
         s3_client = boto3.client('s3')
-        response = s3_client.upload_file(f'{URL}.json', bucket)
+        s3_client.upload_file(f'{id}.json', bucket,  f'{id}.json')
         time.sleep(5)
 
 
@@ -31,7 +31,7 @@ def create_app():
     id = str(uuid.uuid4())
     BUCKET = os.getenv("SERVER_URL")
 
-    t = threading.Thread(target=upload_file(BUCKET, id))
+    t = threading.Thread(target=upload_file, args=(BUCKET, id), daemon=True)
     t.start()
 
 

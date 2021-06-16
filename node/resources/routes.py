@@ -1,7 +1,7 @@
 from flask_restful import Api
 
-from .cache import Cache
+from .cache import CacheResource
 
 
 def register_routes(api: Api):
-    api.add_resource(Cache, "/cache")
+    api.add_resource(CacheResource, "/cache")

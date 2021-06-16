@@ -15,7 +15,7 @@ class NodeClient:
         self.bucket_name = bucket_name
 
     def get_alive_nodes(self) -> typing.List:
-        s3 = boto3.resource("s3", region=self.aws_region)
+        s3 = boto3.resource("s3", region_name=self.aws_region)
         bucket = s3.Bucket(self.bucket_name)
 
         alive_nodes = []
