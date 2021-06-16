@@ -9,6 +9,6 @@ class CacheItem:
         return {
             "key": self.key,
             "data": self.data,
-            "expiration date": self.expiration_date,
+            "expiration_date": self.expiration_date,
             "time": self.time
         }

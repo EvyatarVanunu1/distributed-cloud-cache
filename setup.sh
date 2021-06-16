@@ -10,10 +10,10 @@ done
 
 
 
-KEY_NAME="cloud-course-`date +"%s"`"
+KEY_NAME="cloud-course-cache"
 KEY_PEM="$KEY_NAME.pem"
 
-BUCKET_NAME="s3://distributed_cache_bucket"
+BUCKET_NAME="s3://distributed-cache-bucket"
 
 echo "creating S3 bucket ${BUCKET_NAME}"
 aws s3 mb ${BUCKET_NAME}
@@ -82,7 +82,7 @@ ssh -i $KEY_PEM -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no" -o "Connec
     sudo apt install docker.io -y
     sudo git clone https://github.com/EvyatarVanunu1/distributed-cloud-cache.git
     cd distributed-cloud-cache
-    sudo docker build -t distributed-cloud-cache-orc -f orchestrator.dockerfile
+    sudo docker build . -t distributed-cloud-cache-orc -f orchestrator.dockerfile
     sudo docker run --env-file ~/env_file -p 80:80 -d distributed-cloud-cache-orc
     exit
 EOF
@@ -91,7 +91,7 @@ echo "test that it all worked"
 curl  --retry-connrefused --retry 10 --retry-delay 1  http://$PUBLIC_IP:80/health
 
 
-for (( c=1; c<=${NUM_NODES}; c++ ))
+for (( c=1; c < NUM_NODES; c++ ))
 do
    /bin/bash createNode.sh -s SEC_GRP -b BUCKET_NAME -k KEY_NAME
 done
