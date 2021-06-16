@@ -15,7 +15,7 @@ KEY_PEM="$KEY_NAME.pem"
 
 BUCKET_NAME="s3://distributed_cache_bucket"
 
-echo "creating S3 bucket ${}"
+echo "creating S3 bucket ${BUCKET_NAME}"
 aws s3 mb ${BUCKET_NAME} --profile idc
 
 
