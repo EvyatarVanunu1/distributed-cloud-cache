@@ -26,7 +26,7 @@ def create_app():
     app.config["AWS_REGION"] = os.getenv("AWS_REGION")
 
     api = Api()
-    api.add_resource(Cache, "/cache")
+    api.add_resource(Cache, "/cache/<key>")
     api.add_resource(Heartbeat, "/health")
     api.init_app(app)
 
