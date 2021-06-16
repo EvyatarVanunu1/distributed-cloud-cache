@@ -1,15 +1,31 @@
+import datetime
+import json
 import typing
 from concurrent.futures import ThreadPoolExecutor
 
+import boto3
 import requests
 
 endpoint = "cache"
 
 
 class NodeClient:
+    def __init__(self, bucket_name, aws_region):
+        self.aws_region = aws_region
+        self.bucket_name = bucket_name
 
     def get_alive_nodes(self) -> typing.List:
-        pass
+        s3 = boto3.resource("s3", region=self.aws_region)
+        bucket = s3.Bucket(self.bucket_name)
+
+        alive_nodes = []
+
+        for obj in bucket.objects.all():
+
+            body = json.loads(obj.get()["Body"].read())
+            if not datetime.datetime.fromtimestamp(body["time"]) < datetime.datetime.now() - datetime.timedelta(seconds=20):
+                alive_nodes.append(body["url"])
+        return alive_nodes
 
     def get_key_from_nodes(self, key, nodes):
         futures = []
@@ -42,7 +58,3 @@ class NodeClient:
         except requests.RequestException:
             return None
         return resp.status_code
-
-
-
-

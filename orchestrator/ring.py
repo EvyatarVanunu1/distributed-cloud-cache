@@ -1,4 +1,5 @@
 import hashlib
+import threading
 import typing
 
 import jump
@@ -26,6 +27,21 @@ class Ring:
     def _hash_func(cls, key):
         return int(hashlib.md5(bytes(key, 'utf-8')).hexdigest(), cls.VNODES)
 
+
+class Nodes:
+
+    __NODES = []
+    LOCK = threading.Lock()
+
+    @classmethod
+    def get_alive_nodes(cls):
+        with cls.LOCK:
+            return cls.__NODES
+
+    @classmethod
+    def set_alive_nodes(cls, nodes):
+        with cls.LOCK:
+            __NODES = nodes
 
 
 
