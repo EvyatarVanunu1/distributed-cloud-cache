@@ -7,4 +7,6 @@ RUN pip install -r requirements.txt
 
 COPY . /app
 
-CMD ["python", "orchestrator_server.py"]
+ENTRYPOINT [ "python" ]
+
+CMD [ "orchestrator_server.py" ]

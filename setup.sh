@@ -1,7 +1,7 @@
 # debug
 # set -o xtrace
 
-while getopts n flag
+while getopts n: flag
 do
     case "${flag}" in
         n) NUM_NODES=${OPTARG};;

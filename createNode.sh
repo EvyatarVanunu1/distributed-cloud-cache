@@ -1,7 +1,7 @@
 # debug
 # set -o xtrace
 
-while getopts k:s:b flag
+while getopts k:s:b: flag
 do
     case "${flag}" in
         k) KEY_NAME=${OPTARG};;
