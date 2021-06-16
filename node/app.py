@@ -33,6 +33,7 @@ def create_app():
 
     t = threading.Thread(target=upload_file, args=(BUCKET, id), daemon=True)
     t.start()
+    return app
 
 
 if __name__ == "__main__":

@@ -10,18 +10,18 @@ do
     esac
 done
 
-echo ${SEC_GRP}
+echo $SEC_GRP
 
 KEY_PEM="$KEY_NAME.pem"
 
 UBUNTU_20_04_AMI="ami-042e8287309f5df03"
 
-echo "Creating Ubuntu 20.04 instance..."
+echo "Creating Ubuntu 20.04 instance...${SEC_GRP}"
 RUN_INSTANCES=$(aws ec2 run-instances   \
     --image-id $UBUNTU_20_04_AMI        \
     --instance-type t3.micro            \
     --key-name $KEY_NAME                \
-    --security-groups ${SEC_GRP})
+    --security-groups $SEC_GRP)
 
 INSTANCE_ID=$(echo $RUN_INSTANCES | jq -r '.Instances[0].InstanceId')
 
@@ -48,7 +48,7 @@ ssh -i $KEY_PEM -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no" -o "Connec
     sudo apt install docker.io -y
     sudo git clone https://github.com/EvyatarVanunu1/distributed-cloud-cache.git
     cd distributed-cloud-cache
-    sudo docker build . -t distributed-cloud-cache-orc -f node.dockerfile
+    sudo docker build . -t distributed-cloud-cache-node -f node.dockerfile
     sudo docker run --env-file ~/env_file -p 80:80 -d distributed-cloud-cache-node
     exit
 EOF
