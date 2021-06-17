@@ -1,5 +1,6 @@
 import datetime
 import os
+from logging import getLogger
 import boto3
 import json
 import threading
@@ -8,6 +9,8 @@ import uuid
 from flask import Flask
 from flask_restful import Api
 from .resources.routes import register_routes
+
+logger = getLogger(__name__)
 
 
 def get_server_url():
@@ -22,9 +25,9 @@ def upload_file(bucket, id):
             json.dump(sample, fp)
 
         s3_client = boto3.client('s3')
-        print(f'trying to upload {id}.json {datetime.datetime.now().isoformat()}')
+        logger.info(f'trying to upload {id}.json {datetime.datetime.now().isoformat()}')
         s3_client.upload_file(f'{id}.json', bucket,  f'{id}.json')
-        print(f'{id}.json {datetime.datetime.now().isoformat()}')
+        logger.info(f'{id}.json {datetime.datetime.now().isoformat()}')
         time.sleep(5)
 
 

@@ -2,6 +2,7 @@ import datetime
 import os
 import threading
 import time
+from logging import getLogger
 
 import flask
 from flask_restful import Api
@@ -10,14 +11,16 @@ from orchestrator.nodes import NodeClient
 from orchestrator.resources import Cache, Heartbeat
 from orchestrator.ring import Nodes
 
+logger = getLogger(__name__)
+
 
 def update_alive_nodes(bucket_name, region):
     client = NodeClient(bucket_name=bucket_name, aws_region=region)
     while True:
-        print(f"fetching alive nodes {datetime.datetime.now().isoformat()}")
+        logger.info(f"fetching alive nodes {datetime.datetime.now().isoformat()}")
         alive_nodes = client.get_alive_nodes()
         Nodes.set_alive_nodes(alive_nodes)
-        print(f"alive nodes {alive_nodes}-{datetime.datetime.now().isoformat()}")
+        logger.info(f"alive nodes {alive_nodes}-{datetime.datetime.now().isoformat()}")
         time.sleep(5)
 
 
