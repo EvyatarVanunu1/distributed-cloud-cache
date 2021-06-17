@@ -9,10 +9,14 @@ from flask_restful import Api
 from .resources.routes import register_routes
 
 
+def get_server_url():
+    return f"{os.getenv('SERVER_URL')}:{os.getenv('NODE_PORT', 80)}"
+
+
 def upload_file(bucket, id):
     while True:
-        URL = os.getenv("SERVER_URL")
-        sample = {"url": URL, "time": time.time()}
+        url = get_server_url()
+        sample = {"url": url, "time": time.time()}
         with open(f'{id}.json', 'w') as fp:
             json.dump(sample, fp)
 

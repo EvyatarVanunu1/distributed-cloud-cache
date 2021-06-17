@@ -30,6 +30,9 @@ class Cache(Resource):
         else:
             nodes = ring_nodes
 
+        if not nodes:
+            return {"msg": "no nodes in the cluster. try to add new nodes"}, 500
+
         return client.get_key_from_nodes(key, nodes), 200
 
     def put(self, key):

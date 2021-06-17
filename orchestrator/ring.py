@@ -13,7 +13,14 @@ class Ring:
     @classmethod
     def get_nodes(cls, nodes, key):
         vnode = jump.hash(cls._hash_func(key), cls.VNODES)
-        return nodes[vnode % len(nodes)], nodes[(vnode + 1) % len(nodes)]
+
+        if len(nodes) == 0:
+            return []
+        elif len(nodes) == 1:
+            return nodes
+        else:
+            redundancy = min(max(2, len(nodes) // 4), 4)
+            return tuple(set(nodes[(vnode + i) % len(nodes)] for i in range(redundancy)))
 
     @classmethod
     def get_nodes_from_map(cls, key):
@@ -41,7 +48,7 @@ class Nodes:
     @classmethod
     def set_alive_nodes(cls, nodes):
         with cls.LOCK:
-            __NODES = nodes
+            cls.__NODES = nodes
 
 
 

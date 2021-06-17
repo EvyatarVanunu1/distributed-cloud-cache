@@ -1,4 +1,6 @@
 import time
+import typing
+
 from .CacheItem import CacheItem
 
 
@@ -13,8 +15,9 @@ class Cache:
 
     def get(self, key):
         item = self.map.get(key)
+        item: typing.Optional[CacheItem]
         if item:
-            if item.expiration_date > time.time():
+            if time.time() > item.expiration_date:
                 self.map.pop(key)
                 item = None
         return item

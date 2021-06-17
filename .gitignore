@@ -6,3 +6,4 @@ aws_env_file
 *.pem
 env_file
 test.sh
+.env*

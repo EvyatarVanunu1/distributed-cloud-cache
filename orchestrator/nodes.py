@@ -32,7 +32,8 @@ class NodeClient:
         with ThreadPoolExecutor() as executor:
             for node in nodes:
                 futures.append(executor.submit(self._get_key_from_node, key, node))
-            return sorted((future.result() for future in futures), key=lambda cache_item: cache_item.get("time", 0), reverse=True)[0]
+            result = sorted((future.result() for future in futures), key=lambda cache_item: cache_item.get("time", 0), reverse=True)
+            return {"data": result[0].get("data")} if result[0].get("data") and result else {}
 
     @staticmethod
     def _get_key_from_node(key, node):
