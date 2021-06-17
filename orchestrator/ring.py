@@ -24,7 +24,7 @@ class Ring:
 
     @classmethod
     def get_nodes_from_map(cls, key, nodes):
-        return tuple(node for node in cls.__MAP.get(key) if node in nodes)
+        return tuple(node for node in cls.__MAP.get(key, []) if node in nodes)
 
     @classmethod
     def set_to_map(cls, key, nodes: typing.Tuple):
