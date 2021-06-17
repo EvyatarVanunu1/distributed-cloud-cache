@@ -1,5 +1,7 @@
 import datetime
+import logging
 import os
+import sys
 import threading
 import time
 from logging import getLogger
@@ -11,7 +13,14 @@ from orchestrator.nodes import NodeClient
 from orchestrator.resources import Cache, Heartbeat, NodesResource
 from orchestrator.ring import Nodes
 
+
 logger = getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 def update_alive_nodes(bucket_name, region):
@@ -39,4 +48,3 @@ def create_app():
     threading.Thread(target=update_alive_nodes, args=(app.config["S3_BUCKET_NAME"], app.config["AWS_REGION"]), daemon=True).start()
 
     return app
-

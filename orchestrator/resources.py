@@ -49,7 +49,7 @@ class Cache(Resource):
             return {"msg": "invalid request body. missing data or expiration_date attributes"}, 400
 
         try:
-            expiration_date=datetime.datetime.timestamp(datetime.datetime.fromisoformat(body['expiration_date']))
+            expiration_date = datetime.datetime.timestamp(datetime.datetime.fromisoformat(body['expiration_date']))
         except ValueError:
             return 400, {"msg": "invalid expiration_date, should be iso-formatted"}
 

@@ -1,5 +1,7 @@
 import datetime
+import logging
 import os
+import sys
 from logging import getLogger
 import boto3
 import json
@@ -11,6 +13,12 @@ from flask_restful import Api
 from .resources.routes import register_routes
 
 logger = getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler(sys.stdout)
+handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 def get_server_url():
@@ -25,9 +33,9 @@ def upload_file(bucket, id):
             json.dump(sample, fp)
 
         s3_client = boto3.client('s3')
-        logger.info(f'trying to upload {id}.json {datetime.datetime.now().isoformat()}')
+        logger.info(f'trying to upload {id}.json')
         s3_client.upload_file(f'{id}.json', bucket,  f'{id}.json')
-        logger.info(f'{id}.json {datetime.datetime.now().isoformat()}')
+        logger.info(f'{id}.json')
         time.sleep(5)
 
 
