@@ -1,3 +1,4 @@
+import datetime
 import os
 import boto3
 import json
@@ -21,8 +22,9 @@ def upload_file(bucket, id):
             json.dump(sample, fp)
 
         s3_client = boto3.client('s3')
+        print(f'trying to upload {id}.json {datetime.datetime.now().isoformat()}')
         s3_client.upload_file(f'{id}.json', bucket,  f'{id}.json')
-        print(f'{id}.json')
+        print(f'{id}.json {datetime.datetime.now().isoformat()}')
         time.sleep(5)
 
 
