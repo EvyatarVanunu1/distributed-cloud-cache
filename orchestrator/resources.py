@@ -29,7 +29,7 @@ class Cache(Resource):
         alive_nodes = Nodes.get_alive_nodes()
 
         ring_nodes = Ring.get_nodes(key=key, nodes=alive_nodes)
-        mapped_nodes = Ring.get_nodes_from_map(key=key)
+        mapped_nodes = Ring.get_nodes_from_map(key=key, nodes=alive_nodes)
 
         if mapped_nodes and ring_nodes != mapped_nodes:
             nodes = mapped_nodes

@@ -23,8 +23,8 @@ class Ring:
             return tuple(set(nodes[(vnode + i) % len(nodes)] for i in range(redundancy)))
 
     @classmethod
-    def get_nodes_from_map(cls, key):
-        return cls.__MAP.get(key)
+    def get_nodes_from_map(cls, key, nodes):
+        return tuple(node for node in cls.__MAP.get(key) if node in nodes)
 
     @classmethod
     def set_to_map(cls, key, nodes: typing.Tuple):

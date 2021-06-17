@@ -38,7 +38,7 @@ class NodeClient:
     @staticmethod
     def _get_key_from_node(key, node):
         try:
-            resp = requests.get(f"{node}/{endpoint}/{key}")
+            resp = requests.get(f"{node}/{endpoint}/{key}", timeout=(2, 30))
             resp.raise_for_status()
         except requests.RequestException:
             return {}
@@ -54,7 +54,7 @@ class NodeClient:
     @staticmethod
     def _put_in_node(key, val, node):
         try:
-            resp = requests.put(f"{node}/{endpoint}/{key}", json=val)
+            resp = requests.put(f"{node}/{endpoint}/{key}", json=val, timeout=(2, 30))
             resp.raise_for_status()
         except requests.RequestException:
             return None
