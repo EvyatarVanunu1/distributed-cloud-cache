@@ -15,6 +15,12 @@ class Heartbeat(Resource):
         return "I'm Alive!", 200
 
 
+class NodesResource(Resource):
+
+    def get(self):
+        return Nodes.get_alive_nodes(), 200
+
+
 class Cache(Resource):
 
     def get(self, key):
