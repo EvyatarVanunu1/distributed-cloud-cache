@@ -1,3 +1,4 @@
+import datetime
 import time
 import typing
 
@@ -17,7 +18,7 @@ class Cache:
         item = self.map.get(key)
         item: typing.Optional[CacheItem]
         if item:
-            if time.time() > item.expiration_date:
+            if time.time() > datetime.datetime.fromisoformat(item.expiration_date).timestamp():
                 self.map.pop(key)
                 item = None
         return item
