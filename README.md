@@ -8,7 +8,7 @@ usage -> ```/bin/bash setup.sh -n <num-nodes>```
 
 ## API Routs
 ### /cache
-* Get - /cache/<key> - return JSON {data: <data>} or {}
+* Get - /cache/<key> - return JSON {data: "cache value"} or {}
 * Put - /cache/<key> - req body expecting JSON data (type string), expiration_date (formatted as isoformat)}
 ## Command Line Arguments For Create Node
 * KEY_NAME - The name of the pem file (name only, without ".pem").
