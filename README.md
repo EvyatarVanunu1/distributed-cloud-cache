@@ -7,9 +7,9 @@ be configured.
 usage -> ```/bin/bash setup.sh -n <num-nodes>```
 
 ## API Routs
-### /cache
-* Get - /cache/<key> - return JSON {data: "cache value"} or {}
-* Put - /cache/<key> - req body expecting JSON data (type string), expiration_date (formatted as isoformat)}
+### /cache/{key}
+* Get - /cache/{key} - return JSON {data: "cache value"} or {}
+* Put - /cache/{key} - req body expecting JSON data (type string), expiration_date (formatted as isoformat)}
 ## Command Line Arguments For Create Node
 * KEY_NAME - The name of the pem file (name only, without ".pem").
 * SEC_GRP - The security group name for the EC2 instances.
