@@ -1,4 +1,11 @@
 # distributed-cloud-cache
+
+## setup.sh
+run in order to deploy the system to aws. note that an aws account must 
+be configured. 
+
+usage -> /bin/bash setup.sh -n <num-nodes>
+
 ## API Routs
 ### /cache
 * Get - /cache/<key> - return data or None
