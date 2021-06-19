@@ -93,4 +93,4 @@ EOF
 echo "test that it all worked"
 curl --retry-connrefused --retry 10 --retry-delay 1 http://$PUBLIC_IP:80/health
 
-echo "you can start using cache system at https://${PUBLIC_IP}/cache"
+echo "you can start using cache system at http://${PUBLIC_IP}/cache"
