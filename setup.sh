@@ -43,6 +43,12 @@ aws ec2 authorize-security-group-ingress \
   --group-name $SEC_GRP --port 80 --protocol tcp \
   --cidr 0.0.0.0/0
 
+echo "creating nodes"
+for ((c = 0; c < NUM_NODES; c++)); do
+  /bin/bash createNode.sh -s ${SEC_GRP} -b ${BUCKET_NAME} -k ${KEY_NAME}
+done
+
+
 UBUNTU_20_04_AMI="ami-042e8287309f5df03"
 
 echo "Creating Ubuntu 20.04 instance..."
@@ -87,6 +93,4 @@ EOF
 echo "test that it all worked"
 curl --retry-connrefused --retry 10 --retry-delay 1 http://$PUBLIC_IP:80/health
 
-for ((c = 0; c < NUM_NODES; c++)); do
-  /bin/bash createNode.sh -s ${SEC_GRP} -b ${BUCKET_NAME} -k ${KEY_NAME}
-done
+echo "ypi can start using cache system at https://${PUBLIC_IP}/cache"

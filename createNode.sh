@@ -34,8 +34,6 @@ PUBLIC_IP=$(aws ec2 describe-instances  --instance-ids $INSTANCE_ID |
 
 URL="http://${PUBLIC_IP}"
 
-echo "New instance $INSTANCE_ID @ $PUBLIC_IP"
-
 echo "deploying config file to production"
 /bin/bash create_env_file.sh -s ${URL} -b ${BUCKET_NAME}
 scp -i $KEY_PEM -o "IdentitiesOnly=yes" -o "StrictHostKeyChecking=no" -o "ConnectionAttempts=60" env_file ubuntu@$PUBLIC_IP:/home/ubuntu/
