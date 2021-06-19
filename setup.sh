@@ -13,7 +13,7 @@ KEY_PEM="$KEY_NAME.pem"
 BUCKET_NAME="distributed-cache-bucket"
 BUCKET_URL="s3://${BUCKET_NAME}"
 echo "creating S3 bucket ${BUCKET_URL}"
-aws s3 mb ${BUCKET_NAME}
+aws s3 mb ${BUCKET_URL}
 
 echo "create key pair $KEY_PEM to connect to instances and save locally"
 aws ec2 create-key-pair --key-name $KEY_NAME |
@@ -93,4 +93,4 @@ EOF
 echo "test that it all worked"
 curl --retry-connrefused --retry 10 --retry-delay 1 http://$PUBLIC_IP:80/health
 
-echo "ypi can start using cache system at https://${PUBLIC_IP}/cache"
+echo "you can start using cache system at https://${PUBLIC_IP}/cache"
