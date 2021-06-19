@@ -4,12 +4,12 @@
 run in order to deploy the system to aws. note that an aws account must 
 be configured. 
 
-usage -> /bin/bash setup.sh -n <num-nodes>
+usage -> ```/bin/bash setup.sh -n <num-nodes>```
 
 ## API Routs
 ### /cache
-* Get - /cache/<key> - return data or None
-* Put - /cache/<key> - req body expecting json ```{data (type string), expiration_date (formatted as isoformat)}```
+* Get - /cache/<key> - return JSON {data: <data>} or {}
+* Put - /cache/<key> - req body expecting JSON data (type string), expiration_date (formatted as isoformat)}
 ## Command Line Arguments For Create Node
 * KEY_NAME - The name of the pem file (name only, without ".pem").
 * SEC_GRP - The security group name for the EC2 instances.
